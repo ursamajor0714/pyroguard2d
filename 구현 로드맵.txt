@@ -1,73 +1,73 @@
 ================================================================================
-  🗺️ PyroGuard 2D (파이로가드 2D) — 정밀 구현 로드맵 (Execution Roadmap)
+  🗺️ PyroGuard 2D (파이로가드 2D) — 22개 실전 모듈 개발 TODO 체크리스트 (Roadmap)
 ================================================================================
 
-📌 [작동 및 구현 카테고리 구분]
-  • [프론트엔드 UI] : 화면 조작 컴포넌트, 2D 캔버스, 건물 사이드바, 팝업 모달
-  • [백엔드 API]    : 백엔드 서버 처리 파이프라인 (`app/api/`), 미들웨어 (`middleware.ts`), AI 엔진
-  • [데이터베이스]  : DB 연결 및 저장소 (`lib/aws/dynamodb.ts`)
-  • [공통 유틸]     : 데이터 타입 정의 (`types/`), 좌표 삼각함수 연산 (`lib/utils/`)
-  • [도면 자산]     : 2D CAD SVG 도면 10종 (`public/image/`)
+📌 [이 로드맵 보는 법]
+  • 코드 간소화 및 재사용성을 위해 커스텀 훅(hooks/)과 CSS(styles/)를 독립 분리한 총 22개 실전 모듈 구조입니다.
+  • 1번부터 22번까지 순서대로 파일 하나씩 만들고 구현하면 100% 완결됩니다.
 
 
 --------------------------------------------------------------------------------
-  📌 [STEP 1] 기본 기반 체계 구축 (데이터 규칙 & 전역 상태 디테일)
+  📌 [STEP 1] 기초 타입 & 삼각함수 유틸 & 전역 상태 (1번 ~ 5번)
 --------------------------------------------------------------------------------
-  1. 센서 및 층 데이터 세부 규칙 정의
-     • 상세 디테일 : 센서 4가지 실시간 상태값 (`NORMAL`, `MAINTENANCE`, `ALARM`, `OFFLINE`), 비상구 도어 4단계 상태 (`LOCKED`, `UNLOCKED`, `OPENED`, `CLOSED`), FOV 스냅 규칙 타입 선언
-     • 해당 파일 : `types/sensor.ts`, `types/floor.ts` [공통 유틸]
-  2. 관제 화면 전역 상태 관리소 구축
-     • 상세 디테일 : selectedFloor, zoomLevel (0.5x~5.0x 제한), panOffset, 줌 리셋 더블클릭 액션, 점검 모드(`isMaintenanceMode`) 잠금(Lock) 토글, 도면 외곽 드롭 시 보관함(Staging Dock) 자동 수거 예외 처리
-     • 해당 파일 : `store/useCanvasStore.ts`, `store/useSensorStore.ts` [프론트엔드 UI]
-  3. 2D CAD SVG 도면 원본 에셋 검증
-     • 상세 디테일 : 100% 가공 완성된 20개 층 대표 CAD SVG 도면 10장 세팅 (외부 라벨 `x:110, y:52` 28pt Bold 동기화)
-     • 해당 파일 : `public/image/01.mockup.jpg ~ 10.roof_top.svg` [도면 자산]
+  [ ] 1. `types/sensor.ts` 생성 [공통 유틸]
+         ➔ 6대 센서 종류, 노드 좌표(x,y), FOV 설정, 센서 4대 상태(NORMAL/ALARM/MAINTENANCE/OFFLINE) 타입 정의
+  [ ] 2. `types/floor.ts` 생성 [공통 유틸]
+         ➔ 20개 층 ID ('B3'~'17F', 'ROOF') 및 층별 도면 메타데이터 타입 정의
+  [ ] 3. `lib/utils/canvasMath.ts` 생성 [공통 유틸]
+         ➔ FOV 부채꼴 삼각함수(Math.atan2/cos/sin) 좌표 연산 유틸 구현
+  [ ] 4. `store/useCanvasStore.ts` 생성 [전역 스토어]
+         ➔ 선택된 층, 줌 배율(0.5x~5.0x), 캔버스 이동 좌표(x,y), 더블클릭 줌 리셋 전역 상태 스토어 구현
+  [ ] 5. `store/useSensorStore.ts` 생성 [전역 스토어]
+         ➔ 도면 위 배치된 센서 목록(nodes[]), 센서 추가/이동/삭제 CRUD, 점검 모드 잠금(Lock) 토글 스토어 구현
 
 
 --------------------------------------------------------------------------------
-  📌 [STEP 2] [기능 01] 2D CAD 도면 화면 & 층 이동 & 센서 배치 디테일
+  📌 [STEP 2] 독립 분리 커스텀 훅 & CSS 스타일 (6번 ~ 10번)
 --------------------------------------------------------------------------------
-  1. IBM 스타일 수직 건물 모형 층 선택기
-     • 상세 디테일 : 좌측 2.5D 수직 건물 단면 모형 (Vertical Cutaway), 경보 발생 층 빨간색 점멸 (Blinking Pulse), `framer-motion` 층 전환 줌인 애니메이션
-     • 해당 파일 : `components/sidebar/FloorSelector.tsx` [프론트엔드 UI]
-  2. 2D CAD 도면 캔버스 & 줌/드래그 이동기
-     • 상세 디테일 : `d3-zoom` 0.5x~5.0x 확대/축소 제한, 더블클릭 시 1.0x 줌 및 중앙(0,0) 리셋, SVG inline 렌더링, 층 변경 시 Smooth 카메라 이동
-     • 해당 파일 : `components/canvas/FloorCanvas.tsx` [프론트엔드 UI]
-  3. 6대 센서 아이콘 화면 드래그 배치 & 4대 상태 색상 제어
-     • 상세 디테일 : `lucide-react` 6대 아이콘, 상태별 색상 (정상: 단색 흑백, 점검 중: 황색, 경보: 빨간 점멸+경보음, 통신 장애: 회색), HTML5 Drag & Drop, 점검 모드 Off 시 마우스 드래그 잠금
-     • 해당 파일 : `components/canvas/SensorNode.tsx`, `components/sidebar/SensorPalette.tsx` [프론트엔드 UI]
+  [ ] 6. `hooks/useD3Zoom.ts` 생성 [공통 커스텀 훅]
+         ➔ D3 마우스 휠 줌(0.5~5.0) & 드래그 이동 전용 독립 커스텀 훅 구현
+  [ ] 7. `hooks/useSensorDrag.ts` 생성 [공통 커스텀 훅]
+         ➔ HTML5 센서 아이콘 드래그 앤 드롭 좌표 계산 전용 독립 커스텀 훅 구현
+  [ ] 8. `hooks/useEmergencyTimer.ts` 생성 [공통 커스텀 훅]
+         ➔ 119 소방관 OTP 승인 후 10분 카운트다운 타이머(09:59~00:00) 전용 독립 커스텀 훅 구현
+  [ ] 9. `app/globals.css` 수정 [CSS 스타일]
+         ➔ Tailwind CSS 기본 스타일 설정 및 글로벌 테마 정의
+  [ ] 10. `styles/canvas.module.css` 생성 [CSS 스타일]
+         ➔ 2D 도면 경보 빨간 점멸(Red Pulse) 및 2.5D 건물 층 애니메이션 전용 CSS 모듈 구현
 
 
 --------------------------------------------------------------------------------
-  📌 [STEP 3] [기능 02] CCTV 카메라 화각(FOV) 조작 & 라이브 영상 팝업 디테일
+  📌 [STEP 3] [기능 01 & 02] 프론트엔드 UI 컴포넌트 (11번 ~ 17번)
 --------------------------------------------------------------------------------
-  1. 반투명 부채꼴 화각 렌더링 및 3대 조작 핸들 Snap 기능
-     • 상세 디테일 : SVG 반투명 부채꼴 Arc, 거리 핸들(1m Snap), 화각 핸들(15° Snap), 회전 핸들(45° Snap 및 1° 미세 조절), 부채꼴 마우스 호버 툴팁 (카메라 ID / 거리 m / 화각 deg / 회전 deg)
-     • 해당 파일 : `components/canvas/FovOverlay.tsx` [프론트엔드 UI], `lib/utils/canvasMath.ts` [공통 유틸]
-  2. 화재 알림 시 CCTV 라이브 영상 자동 팝업 모달 & 3대 액션 버튼
-     • 상세 디테일 : `hls.js` HLS 라이브 스트리밍 재생 모달, 팝업 내 3대 액션 버튼 (① [오경보 처리 및 센서 점검 요청], ② [119 긴급 신고 발송], ③ [CCTV 화각 재조정])
-     • 해당 파일 : `components/modals/CctvLiveModal.tsx` [프론트엔드 UI]
+  [ ] 11. `components/sidebar/FloorSelector.tsx` 생성 [프론트엔드 UI]
+         ➔ 화면 좌측 20개 층 수직 건물 단면 모형 UI 구현 (층 이동 + 경보 층 빨간 점멸)
+  [ ] 12. `components/sidebar/SensorPalette.tsx` 생성 [프론트엔드 UI]
+         ➔ 화면 우측 6대 센서 아이콘 팔레트 & 미배치 보관함 (Staging Dock) UI 구현
+  [ ] 13. `components/canvas/FloorCanvas.tsx` 생성 [프론트엔드 UI]
+         ➔ 2D 평면도 SVG 렌더링 + 줌/드래그 이동 조작 캔버스 UI 구현
+  [ ] 14. `components/canvas/SensorNode.tsx` 생성 [프론트엔드 UI]
+         ➔ 도면 위 센서 아이콘 위치 이동 + 4대 상태 색상(정상/점검/경보/장애) 렌더링 구현
+  [ ] 15. `components/canvas/FovOverlay.tsx` 생성 [프론트엔드 UI]
+         ➔ CCTV 전면 반투명 부채꼴 + 3대 조작 핸들 (거리, 화각, 회전 드래그) & 호버 툴팁 구현
+  [ ] 16. `components/modals/CctvLiveModal.tsx` 생성 [프론트엔드 UI]
+         ➔ 센서 경보 발생 시 CCTV 라이브 영상 자동 팝업 모달 + 3대 액션 버튼 구현
+  [ ] 17. `components/modals/EmergencyOtpModal.tsx` 생성 [프론트엔드 UI]
+         ➔ 119 소방관 전용 모바일 OTP 6자리 입력 팝업 모달 UI 구현
 
 
 --------------------------------------------------------------------------------
-  📌 [STEP 4] [기능 03] CCTV AI 비전 인원 탐지·카운팅 & 베스트 컷 캡처 디테일
+  📌 [STEP 4] [기능 03 & 04 & 05] 백엔드 API & 미들웨어 & DB (18번 ~ 22번)
 --------------------------------------------------------------------------------
-  1. MediaPipe & OpenCV 기반 2단계 베스트 컷 자동 캡처 엔진
-     • 상세 디테일 : 1순위 정면 캡처 (Pose 17개 관절 100% + Face Yaw < 15° + OpenCV Blur Score > 100.0), 2순위 Fallback 캡처 (정면 실패 시 인체 픽셀 크기 최대 + Blur 최상 컷 무조건 1장 저장), WebP 포맷 (640x360 썸네일, 50KB 이하)
-     • 해당 파일 : `app/api/emergency/route.ts` [백엔드 API]
-  2. 119 소방대원 전용 모바일 OTP 6자리 승인 & 10분 타이머 미들웨어
-     • 상세 디테일 : 소방관 안전 단말기(태블릿) 발급 1회용 OTP 6자리 온라인 입력, 10분 카운트다운 타이머 (`09:59`~`00:00`) 작동 후 10분 지남 자동 Re-Lock 암호화
-     • 해당 파일 : `middleware.ts` [백엔드 API], `components/modals/EmergencyOtpModal.tsx` [프론트엔드 UI]
-
-
---------------------------------------------------------------------------------
-  📌 [STEP 5] [기능 04 & 05] 3대 방재 보완 & 기존 소방 RS-485 $0원 SW 연동 디테일
---------------------------------------------------------------------------------
-  1. 미세 아크/누수/비상문 자동개폐기 & B2 전기차 연기 감지 서버 처리
-     • 상세 디테일 : `serialport` RS-485 통신 패킷 타임아웃 (3초 무응답 시 OFFLINE 경고), 미세 아크 EPS실 국소 차단 + Buzzer Alarm 토글, 비상문 4단계 상태 시각화, B2 전기차 연기 감지 시 `B2 주차장 도면` 자동 카메라 전환 + 불꽃 점멸 + CCTV 라이브 자동 팝업
-     • 해당 파일 : `app/api/sensors/route.ts`, `app/api/floors/route.ts` [백엔드 API]
-  2. AWS DynamoDB 데이터 저장소 연동
-     • 상세 디테일 : 센서 위치 노드, FOV 화각 설정, 경보 이력 데이터 DB 영구 저장 및 불러오기 SDK 연동
-     • 해당 파일 : `lib/aws/dynamodb.ts` [데이터베이스 DB]
+  [ ] 18. `app/api/emergency/route.ts` 생성 [백엔드 API]
+         ➔ MediaPipe + OpenCV 기반 1순위 정면 캡처 & 2순위 Fallback 인체 캡처 백엔드 API 구현
+  [ ] 19. `middleware.ts` 생성 [백엔드 미들웨어]
+         ➔ 관제사 세션 및 119 OTP 10분 임시 권한 해독 부여 미들웨어 구현
+  [ ] 20. `app/api/sensors/route.ts` 생성 [백엔드 API]
+         ➔ 아크, 누수, 비상구 자동개폐기 & B2 전기차 연기 감지 RS-485 백엔드 API 구현
+  [ ] 21. `app/api/floors/route.ts` 생성 [백엔드 API]
+         ➔ 층별 도면 정보 및 상태 조회 API 구현
+  [ ] 22. `lib/aws/dynamodb.ts` 생성 [데이터베이스 DB]
+         ➔ AWS DynamoDB 센서 위치, FOV 설정, 경보 이력 저장/조회 SDK 연동 구현
 
 ================================================================================
