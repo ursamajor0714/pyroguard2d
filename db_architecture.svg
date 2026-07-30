@@ -1,0 +1,409 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1280" width="100%" height="100%" style="background-color: #080c14; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Background Patterns -->
+    <pattern id="grid-arch" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+    <pattern id="dots-arch" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#334155" opacity="0.4"/>
+    </pattern>
+
+    <!-- Layer Card Gradients -->
+    <linearGradient id="layer-fe" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="layer-api" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="layer-lib" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#2a1215"/>
+    </linearGradient>
+    <linearGradient id="layer-aws" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1c1917"/>
+    </linearGradient>
+
+    <!-- Component Header Gradients -->
+    <linearGradient id="grad-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="grad-purple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="grad-orange" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="grad-green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="shadow-arch" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f97316"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#c084fc"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1920" height="1280" fill="#080c14"/>
+  <rect width="1920" height="1280" fill="url(#grid-arch)"/>
+  <rect width="1920" height="1280" fill="url(#dots-arch)"/>
+
+  <!-- HEADER -->
+  <g transform="translate(60, 45)">
+    <rect x="0" y="0" width="36" height="36" rx="8" fill="url(#grad-orange)"/>
+    <path d="M18 6 L28 26 L8 26 Z" fill="#ffffff" transform="translate(0, 2)"/>
+    <text x="48" y="24" fill="#ffffff" font-size="28" font-weight="800" letter-spacing="0.5">PyroGuard 2D — DB &amp; Data Flow Architecture</text>
+    <text x="48" y="48" fill="#94a3b8" font-size="14" font-weight="400">데이터베이스 아키텍처 &amp; 시스템 데이터 파이프라인 구성도 (Frontend ↔ API Router ↔ DynamoDB)</text>
+    
+    <!-- Flow Status Badges -->
+    <g transform="translate(1300, 10)">
+      <rect x="0" y="0" width="500" height="42" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <circle cx="20" cy="21" r="5" fill="#38bdf8"/>
+      <text x="32" y="25" fill="#cbd5e1" font-size="12" font-weight="600">3s Polling</text>
+      
+      <circle cx="130" cy="21" r="5" fill="#f97316"/>
+      <text x="142" y="25" fill="#cbd5e1" font-size="12" font-weight="600">Real-time Alert Event</text>
+
+      <circle cx="310" cy="21" r="5" fill="#a855f7"/>
+      <text x="322" y="25" fill="#cbd5e1" font-size="12" font-weight="600">119 OTP Session Guard</text>
+    </g>
+  </g>
+
+  <!-- ================================================================= -->
+  <!-- FOUR MAIN ARCHITECTURE LAYERS -->
+  <!-- ================================================================= -->
+
+  <!-- LAYER 1: FRONTEND PRESENTATION & STATE LAYER -->
+  <g transform="translate(60, 130)" filter="url(#shadow-arch)">
+    <rect width="1800" height="250" rx="16" fill="url(#layer-fe)" stroke="#4338ca" stroke-width="2"/>
+    <rect width="1800" height="36" rx="16" fill="#1e1b4b"/>
+    <rect y="26" width="1800" height="10" fill="#4338ca"/>
+    <text x="24" y="24" fill="#a5b4fc" font-size="15" font-weight="800" letter-spacing="1">LAYER 1: FRONTEND PRESENTATION &amp; STATE MANAGEMENT (Next.js React Client)</text>
+
+    <!-- Component Box 1-1: 2D CAD Canvas Viewer -->
+    <g transform="translate(30, 55)">
+      <rect width="400" height="175" rx="10" fill="#0f172a" stroke="#312e81" stroke-width="1.5"/>
+      <rect width="400" height="32" rx="10" fill="url(#grad-purple)"/>
+      <rect y="24" width="400" height="8" fill="#6366f1"/>
+      <text x="15" y="21" fill="#ffffff" font-size="14" font-weight="700">2D CAD Control Viewer (page.tsx)</text>
+      
+      <text x="15" y="55" fill="#c7d2fe" font-size="12" font-weight="600">• FloorCanvas.tsx (Zoom/Pan 2D 관제)</text>
+      <text x="15" y="78" fill="#c7d2fe" font-size="12" font-weight="600">• SensorNode.tsx (6대 방재 센서 노드 렌더러)</text>
+      <text x="15" y="101" fill="#c7d2fe" font-size="12" font-weight="600">• FovOverlay.tsx (CCTV FOV 화각 삼각함수)</text>
+      <text x="15" y="124" fill="#c7d2fe" font-size="12" font-weight="600">• OccupantLayer.tsx (인명 실시간 위치 모형)</text>
+      <text x="15" y="147" fill="#818cf8" font-size="11">SVG 평면도 도면 (02.lobby_1F ~ 10.roof_top)</text>
+    </g>
+
+    <!-- Component Box 1-2: Zustand Global Stores -->
+    <g transform="translate(460, 55)">
+      <rect width="420" height="175" rx="10" fill="#0f172a" stroke="#312e81" stroke-width="1.5"/>
+      <rect width="420" height="32" rx="10" fill="url(#grad-blue)"/>
+      <rect y="24" width="420" height="8" fill="#0284c7"/>
+      <text x="15" y="21" fill="#ffffff" font-size="14" font-weight="700">Zustand Global State Stores (store/)</text>
+
+      <text x="15" y="55" fill="#e0f2fe" font-size="12" font-weight="600">• useSensorStore.ts (센서 CRUD &amp; 3초 Polling)</text>
+      <text x="15" y="78" fill="#e0f2fe" font-size="12" font-weight="600">• useCanvasStore.ts (층 선택, Zoom, Pan 좌표)</text>
+      <text x="15" y="101" fill="#e0f2fe" font-size="12" font-weight="600">• useEvChargerStore.ts (B2 전기차 15대 현황)</text>
+      <text x="15" y="124" fill="#e0f2fe" font-size="12" font-weight="600">• useFireLogStore.ts (소방 정기점검 이력)</text>
+      <text x="15" y="147" fill="#e0f2fe" font-size="12" font-weight="600">• useOccupantStore.ts (층별 인원 위치 상태)</text>
+    </g>
+
+    <!-- Component Box 1-3: Modals & Panels -->
+    <g transform="translate(910, 55)">
+      <rect width="420" height="175" rx="10" fill="#0f172a" stroke="#312e81" stroke-width="1.5"/>
+      <rect width="420" height="32" rx="10" fill="url(#grad-orange)"/>
+      <rect y="24" width="420" height="8" fill="#ea580c"/>
+      <text x="15" y="21" fill="#ffffff" font-size="14" font-weight="700">Modals &amp; Side Control Panels</text>
+
+      <text x="15" y="55" fill="#ffedd5" font-size="12" font-weight="600">• CctvLiveModal.tsx (경보 시 팝업 라이브 뷰)</text>
+      <text x="15" y="78" fill="#ffedd5" font-size="12" font-weight="600">• EmergencyOtpModal.tsx (119 소방관 OTP 입력)</text>
+      <text x="15" y="101" fill="#ffedd5" font-size="12" font-weight="600">• FloorSelector.tsx (21개 층 탭 전환 패널)</text>
+      <text x="15" y="124" fill="#ffedd5" font-size="12" font-weight="600">• SensorPalette.tsx (Drag &amp; Drop 노드 배치)</text>
+      <text x="15" y="147" fill="#fb923c" font-size="11">센서 이상 동작 시 CctvLiveModal 즉시 자동 팝업</text>
+    </g>
+
+    <!-- Component Box 1-4: Mobile Demo Page -->
+    <g transform="translate(1360, 55)">
+      <rect width="410" height="175" rx="10" fill="#0f172a" stroke="#312e81" stroke-width="1.5"/>
+      <rect width="410" height="32" rx="10" fill="url(#grad-green)"/>
+      <rect y="24" width="410" height="8" fill="#059669"/>
+      <text x="15" y="21" fill="#ffffff" font-size="14" font-weight="700">Mobile Responsive Demo View</text>
+
+      <text x="15" y="55" fill="#d1fae5" font-size="12" font-weight="600">• mobile-demo/page.tsx (현장 감시용 모바일 UI)</text>
+      <text x="15" y="78" fill="#d1fae5" font-size="12" font-weight="600">• 5초 주기 백그라운드 센서 상태 갱신</text>
+      <text x="15" y="101" fill="#d1fae5" font-size="12" font-weight="600">• 터치 제스처 최적화 층별 도면 스위처</text>
+      <text x="15" y="124" fill="#d1fae5" font-size="12" font-weight="600">• 긴급 소방 알림 푸시 수신 인터페이스</text>
+      <text x="15" y="147" fill="#34d399" font-size="11">소방관 모바일 단말기 시뮬레이션 호환</text>
+    </g>
+  </g>
+
+
+  <!-- LAYER 2: SECURITY MIDDLEWARE & NEXT.JS API ROUTER LAYER -->
+  <g transform="translate(60, 420)" filter="url(#shadow-arch)">
+    <rect width="1800" height="240" rx="16" fill="url(#layer-api)" stroke="#334155" stroke-width="2"/>
+    <rect width="1800" height="36" rx="16" fill="#1e293b"/>
+    <rect y="26" width="1800" height="10" fill="#334155"/>
+    <text x="24" y="24" fill="#cbd5e1" font-size="15" font-weight="800" letter-spacing="1">LAYER 2: SECURITY MIDDLEWARE &amp; NEXT.JS API ROUTES (Node.js App Router)</text>
+
+    <!-- Component 2-1: Middleware -->
+    <g transform="translate(30, 55)">
+      <rect width="360" height="165" rx="10" fill="#0f172a" stroke="#e11d48" stroke-width="1.5"/>
+      <rect width="360" height="32" rx="10" fill="url(#hdr-emergency)"/>
+      <rect y="24" width="360" height="8" fill="#b91c1c"/>
+      <text x="15" y="21" fill="#ffffff" font-size="14" font-weight="700">middleware.ts (보안 미들웨어)</text>
+
+      <text x="15" y="55" fill="#fca5a5" font-size="12" font-weight="600">• 라우트 접근 세션 검증 &amp; 보호</text>
+      <text x="15" y="78" fill="#fca5a5" font-size="12" font-weight="600">• 119 OTP 승인 미들웨어 세션 체크</text>
+      <text x="15" y="101" fill="#fca5a5" font-size="12" font-weight="600">• 개인정보보호법 제15조 조항 적용</text>
+      <text x="15" y="124" fill="#f87171" font-size="11">미인증 시 /api/emergency 인명수 = 0 마스킹</text>
+      <text x="15" y="142" fill="#f87171" font-size="11">OTP ('119119') 승인 시 286명 상세 인명 표출</text>
+    </g>
+
+    <!-- Component 2-2: API /api/sensors -->
+    <g transform="translate(420, 55)">
+      <rect width="430" height="165" rx="10" fill="#0f172a" stroke="#0284c7" stroke-width="1.5"/>
+      <rect width="430" height="32" rx="10" fill="url(#grad-blue)"/>
+      <rect y="24" width="430" height="8" fill="#0284c7"/>
+      <text x="15" y="21" fill="#ffffff" font-size="14" font-weight="700">app/api/sensors/route.ts (센서 CRUD)</text>
+
+      <text x="15" y="55" fill="#7dd3fc" font-size="12" font-weight="600">• GET: 전체 또는 floorId별 센서 목록 조회</text>
+      <text x="15" y="78" fill="#7dd3fc" font-size="12" font-weight="600">• POST: 신규 방재 센서 노드 도면 등록</text>
+      <text x="15" y="101" fill="#7dd3fc" font-size="12" font-weight="600">• PUT: 센서 좌표, 경보, 수압, FOV, 비상문 갱신</text>
+      <text x="15" y="124" fill="#7dd3fc" font-size="12" font-weight="600">• DELETE: 센서 도면 철거 (삭제)</text>
+      <text x="15" y="145" fill="#f97316" font-size="11" font-weight="700">🚨 B2 연기 감지 시 triggerAutoFloorChange:'B2' 반환</text>
+    </g>
+
+    <!-- Component 2-3: API /api/floors -->
+    <g transform="translate(880, 55)">
+      <rect width="430" height="165" rx="10" fill="#0f172a" stroke="#059669" stroke-width="1.5"/>
+      <rect width="430" height="32" rx="10" fill="url(#grad-green)"/>
+      <rect y="24" width="430" height="8" fill="#059669"/>
+      <text x="15" y="21" fill="#ffffff" font-size="14" font-weight="700">app/api/floors/route.ts (층별 집계 API)</text>
+
+      <text x="15" y="55" fill="#6ee7b7" font-size="12" font-weight="600">• GET: 빌딩 전체 20개 층 현황 종합 집계</text>
+      <text x="15" y="78" fill="#6ee7b7" font-size="12" font-weight="600">• 층별 센서 개수 (sensorCount) 카운팅</text>
+      <text x="15" y="101" fill="#6ee7b7" font-size="12" font-weight="600">• 층별 경보 발생 여부 (hasAlarm) 판별</text>
+      <text x="15" y="124" fill="#6ee7b7" font-size="12" font-weight="600">• 층 대표 상태 결정 로직 (Priority Chain):</text>
+      <text x="15" y="145" fill="#fbbf24" font-size="11" font-weight="700">  ALARM &gt; OFFLINE &gt; MAINTENANCE &gt; NORMAL</text>
+    </g>
+
+    <!-- Component 2-4: API /api/emergency -->
+    <g transform="translate(1340, 55)">
+      <rect width="430" height="165" rx="10" fill="#0f172a" stroke="#b91c1c" stroke-width="1.5"/>
+      <rect width="430" height="32" rx="10" fill="url(#hdr-emergency)"/>
+      <rect y="24" width="430" height="8" fill="#b91c1c"/>
+      <text x="15" y="21" fill="#ffffff" font-size="14" font-weight="700">app/api/emergency/route.ts (119 OTP)</text>
+
+      <text x="15" y="55" fill="#fca5a5" font-size="12" font-weight="600">• GET: OTP 승인 검증 및 잔류인원수 반환</text>
+      <text x="15" y="78" fill="#fca5a5" font-size="12" font-weight="600">• POST: 119 OTP ('119119') 검증 승인</text>
+      <text x="15" y="101" fill="#fca5a5" font-size="12" font-weight="600">• POST (action:'REVOKE'): 소방 상황 종료 해제</text>
+      <text x="15" y="124" fill="#fca5a5" font-size="12" font-weight="600">• isOtpApprovedPersistent 인메모리 세션 유지</text>
+      <text x="15" y="145" fill="#f87171" font-size="11">승인 전: peopleCount=0 | 승인 후: peopleCount=286</text>
+    </g>
+  </g>
+
+
+  <!-- LAYER 3: DATA ACCESS & AWS ADAPTER LAYER -->
+  <g transform="translate(60, 700)" filter="url(#shadow-arch)">
+    <rect width="1800" height="220" rx="16" fill="url(#layer-lib)" stroke="#991b1b" stroke-width="2"/>
+    <rect width="1800" height="36" rx="16" fill="#450a0a"/>
+    <rect y="26" width="1800" height="10" fill="#991b1b"/>
+    <text x="24" y="24" fill="#fca5a5" font-size="15" font-weight="800" letter-spacing="1">LAYER 3: BACKEND DATA ACCESS &amp; DYNAMODB ADAPTER (lib/aws/dynamodb.ts)</text>
+
+    <!-- Component 3-1: DynamoDB Client -->
+    <g transform="translate(30, 55)">
+      <rect width="520" height="145" rx="10" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
+      <rect width="520" height="30" rx="10" fill="url(#hdr-sensor)"/>
+      <rect y="22" width="520" height="8" fill="#f97316"/>
+      <text x="15" y="20" fill="#ffffff" font-size="14" font-weight="700">AWS DynamoDB Client &amp; DocClient Instance</text>
+
+      <text x="15" y="52" fill="#ffedd5" font-size="12" font-weight="600">• DynamoDBClient (aws-sdk v3 / @aws-sdk/lib-dynamodb)</text>
+      <text x="15" y="74" fill="#ffedd5" font-size="12" font-weight="600">• DynamoDBDocumentClient.from(client) 래핑 오퍼레이션</text>
+      <text x="15" y="96" fill="#ffedd5" font-size="12" font-weight="600">• AWS AccessKey &amp; Region (ap-northeast-2) 자격 증명 연동</text>
+      <text x="15" y="118" fill="#f97316" font-size="11">클라우드 DB 미연결 시 localMemoryDb 인메모리 미러링 캐시 자동 작동</text>
+    </g>
+
+    <!-- Component 3-2: CRUD Helper Functions -->
+    <g transform="translate(580, 55)">
+      <rect width="580" height="145" rx="10" fill="#0f172a" stroke="#0284c7" stroke-width="1.5"/>
+      <rect width="580" height="30" rx="10" fill="url(#grad-blue)"/>
+      <rect y="22" width="580" height="8" fill="#0284c7"/>
+      <text x="15" y="20" fill="#ffffff" font-size="14" font-weight="700">Database Data Access Object (DAO) Helpers</text>
+
+      <text x="15" y="52" fill="#e0f2fe" font-size="12" font-weight="600">• getSensorsFromDb(floorId?: string) : ScanCommand / QueryCommand</text>
+      <text x="15" y="74" fill="#e0f2fe" font-size="12" font-weight="600">• saveSensorToDb(sensor: SensorNode) : PutCommand</text>
+      <text x="15" y="96" fill="#e0f2fe" font-size="12" font-weight="600">• updateSensorInDb(id: string, fields: Partial) : UpdateCommand</text>
+      <text x="15" y="118" fill="#e0f2fe" font-size="12" font-weight="600">• deleteSensorFromDb(id: string) : DeleteCommand</text>
+    </g>
+
+    <!-- Component 3-3: Initial Seeding Generator -->
+    <g transform="translate(1190, 55)">
+      <rect width="580" height="145" rx="10" fill="#0f172a" stroke="#059669" stroke-width="1.5"/>
+      <rect width="580" height="30" rx="10" fill="url(#grad-green)"/>
+      <rect y="22" width="580" height="8" fill="#059669"/>
+      <text x="15" y="20" fill="#ffffff" font-size="14" font-weight="700">generateOfficeBuildingSensors() Initial Seeder</text>
+
+      <text x="15" y="52" fill="#d1fae5" font-size="12" font-weight="600">• 빌딩 21개 관제 구역 기본 센서 세팅 (최초 진입 시 전원 NORMAL)</text>
+      <text x="15" y="74" fill="#d1fae5" font-size="12" font-weight="600">• 지상층 16개(17F~2F), 옥상(ROOF), 1층 로비, 지하 3개(B1~B3), 건물 외부</text>
+      <text x="15" y="96" fill="#d1fae5" font-size="12" font-weight="600">• CCTV 화각(fov), 아크(Arc), 수압(Water Pressure), 비상구(Door) 자동 생성</text>
+      <text x="15" y="118" fill="#34d399" font-size="11">B2 전기차 연기 감지기 (sensor-ev-smoke) 데모 시뮬레이터 수록</text>
+    </g>
+  </g>
+
+
+  <!-- LAYER 4: AWS DYNAMODB CLOUD STORAGE LAYER -->
+  <g transform="translate(60, 960)" filter="url(#shadow-arch)">
+    <rect width="1800" height="260" rx="16" fill="url(#layer-aws)" stroke="#f97316" stroke-width="2"/>
+    <rect width="1800" height="36" rx="16" fill="#292524"/>
+    <rect y="26" width="1800" height="10" fill="#f97316"/>
+    <text x="24" y="24" fill="#ffedd5" font-size="15" font-weight="800" letter-spacing="1">LAYER 4: AWS DYNAMODB CLOUD STORAGE (NoSQL Managed Database Tables)</text>
+
+    <!-- Table 1: PyroGuard_Sensors -->
+    <g transform="translate(30, 55)">
+      <rect width="270" height="185" rx="10" fill="#0f172a" stroke="#f97316" stroke-width="1.5" filter="url(#glow-amber)"/>
+      <rect width="270" height="30" rx="10" fill="url(#hdr-sensor)"/>
+      <rect y="22" width="270" height="8" fill="#f97316"/>
+      <text x="12" y="20" fill="#ffffff" font-size="13" font-weight="800">PyroGuard_Sensors</text>
+
+      <text x="12" y="50" fill="#f87171" font-size="11" font-weight="700">PK: id (String / UUID)</text>
+      <text x="12" y="70" fill="#38bdf8" font-size="11" font-weight="700">GSI1-PK: floorId (FloorId)</text>
+      <text x="12" y="90" fill="#94a3b8" font-size="11">• type (SensorType)</text>
+      <text x="12" y="108" fill="#94a3b8" font-size="11">• x, y (Canvas Percent)</text>
+      <text x="12" y="126" fill="#94a3b8" font-size="11">• status (SensorStatus)</text>
+      <text x="12" y="144" fill="#818cf8" font-size="11">• fov, doorState, value</text>
+      <text x="12" y="165" fill="#cbd5e1" font-size="10">6대 방재 센서 도면 배치 테이블</text>
+    </g>
+
+    <!-- Table 2: PyroGuard_Floors -->
+    <g transform="translate(325, 55)">
+      <rect width="270" height="185" rx="10" fill="#0f172a" stroke="#0284c7" stroke-width="1.5"/>
+      <rect width="270" height="30" rx="10" fill="url(#hdr-floor)"/>
+      <rect y="22" width="270" height="8" fill="#0284c7"/>
+      <text x="12" y="20" fill="#ffffff" font-size="13" font-weight="800">PyroGuard_Floors</text>
+
+      <text x="12" y="50" fill="#f87171" font-size="11" font-weight="700">PK: id (FloorId)</text>
+      <text x="12" y="70" fill="#94a3b8" font-size="11">• name, fullName (String)</text>
+      <text x="12" y="90" fill="#94a3b8" font-size="11">• svgPath (CAD Vector)</text>
+      <text x="12" y="108" fill="#c084fc" font-size="11">• type (FloorType)</text>
+      <text x="12" y="126" fill="#94a3b8" font-size="11">• description (String)</text>
+      <text x="12" y="144" fill="#38bdf8" font-size="11">• occupantCount (Number)</text>
+      <text x="12" y="165" fill="#cbd5e1" font-size="10">21개 관제 구역 메타데이터</text>
+    </g>
+
+    <!-- Table 3: PyroGuard_Occupants -->
+    <g transform="translate(620, 55)">
+      <rect width="270" height="185" rx="10" fill="#0f172a" stroke="#059669" stroke-width="1.5"/>
+      <rect width="270" height="30" rx="10" fill="url(#hdr-occupant)"/>
+      <rect y="22" width="270" height="8" fill="#059669"/>
+      <text x="12" y="20" fill="#ffffff" font-size="13" font-weight="800">PyroGuard_Occupants</text>
+
+      <text x="12" y="50" fill="#f87171" font-size="11" font-weight="700">PK: id (String)</text>
+      <text x="12" y="70" fill="#38bdf8" font-size="11" font-weight="700">GSI1-PK: floorId (FloorId)</text>
+      <text x="12" y="90" fill="#94a3b8" font-size="11">• x, y (Canvas Percent)</text>
+      <text x="12" y="108" fill="#94a3b8" font-size="11">• roomName (Location)</text>
+      <text x="12" y="130" fill="#34d399" font-size="11">• AI 비전 인원 탐지 위치</text>
+      <text x="12" y="165" fill="#cbd5e1" font-size="10">층별 실시간 잔류 인원 좌표</text>
+    </g>
+
+    <!-- Table 4: PyroGuard_FireLogs -->
+    <g transform="translate(915, 55)">
+      <rect width="270" height="185" rx="10" fill="#0f172a" stroke="#7c3aed" stroke-width="1.5"/>
+      <rect width="270" height="30" rx="10" fill="url(#hdr-firelog)"/>
+      <rect y="22" width="270" height="8" fill="#7c3aed"/>
+      <text x="12" y="20" fill="#ffffff" font-size="13" font-weight="800">PyroGuard_FireLogs</text>
+
+      <text x="12" y="50" fill="#f87171" font-size="11" font-weight="700">PK: id (String / Log UUID)</text>
+      <text x="12" y="70" fill="#38bdf8" font-size="11" font-weight="700">GSI1-PK: floorId (FloorId)</text>
+      <text x="12" y="90" fill="#94a3b8" font-size="11">• date (YYYY-MM-DD)</text>
+      <text x="12" y="108" fill="#94a3b8" font-size="11">• inspector, category</text>
+      <text x="12" y="126" fill="#fbbf24" font-size="11">• result (PASS/WARN/FAIL)</text>
+      <text x="12" y="144" fill="#94a3b8" font-size="11">• content, notes</text>
+      <text x="12" y="165" fill="#cbd5e1" font-size="10">소방 안전 정기 점검 기록 이력</text>
+    </g>
+
+    <!-- Table 5: PyroGuard_EvChargers -->
+    <g transform="translate(1210, 55)">
+      <rect width="270" height="185" rx="10" fill="#0f172a" stroke="#0d9488" stroke-width="1.5"/>
+      <rect width="270" height="30" rx="10" fill="url(#hdr-ev)"/>
+      <rect y="22" width="270" height="8" fill="#0d9488"/>
+      <text x="12" y="20" fill="#ffffff" font-size="13" font-weight="800">PyroGuard_EvChargers</text>
+
+      <text x="12" y="50" fill="#f87171" font-size="11" font-weight="700">PK: id (String / 'EV-01')</text>
+      <text x="12" y="70" fill="#38bdf8" font-size="11" font-weight="700">GSI1-PK: location ('B2-A1')</text>
+      <text x="12" y="90" fill="#94a3b8" font-size="11">• name, type ('FAST'|'SLOW')</text>
+      <text x="12" y="108" fill="#38bdf8" font-size="11">• powerKw (200, 100, 14)</text>
+      <text x="12" y="126" fill="#fbbf24" font-size="11">• status, tempC (°C)</text>
+      <text x="12" y="165" fill="#cbd5e1" font-size="10">B2 전기차 충전기 15대 현황</text>
+    </g>
+
+    <!-- Table 6: PyroGuard_EmergencySessions -->
+    <g transform="translate(1505, 55)">
+      <rect width="265" height="185" rx="10" fill="#0f172a" stroke="#b91c1c" stroke-width="1.5"/>
+      <rect width="265" height="30" rx="10" fill="url(#hdr-emergency)"/>
+      <rect y="22" width="265" height="8" fill="#b91c1c"/>
+      <text x="12" y="20" fill="#ffffff" font-size="13" font-weight="800">PyroGuard_Sessions</text>
+
+      <text x="12" y="50" fill="#f87171" font-size="11" font-weight="700">PK: sessionId ('SESS-119')</text>
+      <text x="12" y="70" fill="#94a3b8" font-size="11">• otpCode ('119119')</text>
+      <text x="12" y="90" fill="#f87171" font-size="11">• isOtpApproved (Boolean)</text>
+      <text x="12" y="108" fill="#38bdf8" font-size="11">• peopleCount (286)</text>
+      <text x="12" y="126" fill="#94a3b8" font-size="11">• action ('REVOKE')</text>
+      <text x="12" y="165" fill="#cbd5e1" font-size="10">119 OTP 권한 승인 세션</text>
+    </g>
+  </g>
+
+
+  <!-- ================================================================= -->
+  <!-- DATA FLOW ARROWS & INTERACTION LINES -->
+  <!-- ================================================================= -->
+
+  <!-- Flow 1: Client Store -> API /api/sensors (3s Polling) -->
+  <path d="M 670 240 L 670 475" fill="none" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arr-blue)" stroke-dasharray="6,3"/>
+  <rect x="615" y="340" width="110" height="22" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+  <text x="670" y="355" fill="#38bdf8" font-size="11" font-weight="700" text-anchor="middle">GET 3s Polling</text>
+
+  <!-- Flow 2: Modal -> API /api/emergency (OTP Auth) -->
+  <path d="M 1120 240 C 1120 350, 1550 350, 1550 475" fill="none" stroke="#f87171" stroke-width="2.5" marker-end="url(#arr-purple)"/>
+  <rect x="1290" y="340" width="130" height="22" rx="4" fill="#0f172a" stroke="#f87171" stroke-width="1"/>
+  <text x="1355" y="355" fill="#f87171" font-size="11" font-weight="700" text-anchor="middle">POST OTP 119119</text>
+
+  <!-- Flow 3: API Routes -> lib/aws/dynamodb.ts DAO -->
+  <path d="M 870 595 L 870 755" fill="none" stroke="#f97316" stroke-width="2.5" marker-end="url(#arr-orange)"/>
+  <rect x="800" y="660" width="140" height="22" rx="4" fill="#0f172a" stroke="#f97316" stroke-width="1"/>
+  <text x="870" y="675" fill="#f97316" font-size="11" font-weight="700" text-anchor="middle">Invoke AWS DAO CRUD</text>
+
+  <!-- Flow 4: DAO -> DynamoDB Tables -->
+  <path d="M 870 875 C 870 930, 160 930, 160 1015" fill="none" stroke="#f97316" stroke-width="2.5" marker-end="url(#arr-orange)"/>
+  <rect x="450" y="915" width="150" height="22" rx="4" fill="#0f172a" stroke="#f97316" stroke-width="1"/>
+  <text x="525" y="930" fill="#f97316" font-size="11" font-weight="700" text-anchor="middle">AWS SDK Put/Get/Update</text>
+
+</svg>

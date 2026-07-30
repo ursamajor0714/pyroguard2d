@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 680" width="100%" height="100%" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Main Container Box -->
+  <rect x="15" y="15" width="870" height="650" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="url(#card-shadow)"/>
+
+  <!-- ================================================================= -->
+  <!-- CATEGORY 1: APPLICATION AND DATA (10) -->
+  <!-- ================================================================= -->
+
+  <!-- Category Header 1 -->
+  <g transform="translate(35, 35)">
+    <!-- Database Icon -->
+    <rect x="0" y="0" width="44" height="44" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/>
+    <g transform="translate(10, 10)" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3"/>
+      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+    </g>
+
+    <!-- Title & Count -->
+    <text x="58" y="28" fill="#0f172a" font-size="19" font-weight="700" letter-spacing="-0.3">Application and Data</text>
+    <text x="260" y="28" fill="#94a3b8" font-size="16" font-weight="500">(10)</text>
+
+    <!-- Collapsible Minus Icon -->
+    <line x1="800" y1="22" x2="816" y2="22" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- GRID 1: 10 TILES -->
+  
+  <!-- Row 1: React, Next.js, TypeScript, Tailwind CSS, AWS DynamoDB -->
+  <g transform="translate(45, 100)">
+    <rect width="145" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="37" y="14" width="71" height="52" rx="8" fill="#0f172a"/>
+    <g transform="translate(72.5, 40) scale(0.6)">
+      <ellipse rx="22" ry="8" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
+      <ellipse rx="22" ry="8" fill="none" stroke="#38bdf8" stroke-width="2.5" transform="rotate(60)"/>
+      <ellipse rx="22" ry="8" fill="none" stroke="#38bdf8" stroke-width="2.5" transform="rotate(120)"/>
+      <circle r="4" fill="#38bdf8"/>
+    </g>
+    <text x="72.5" y="88" fill="#334155" font-size="14" font-weight="600" text-anchor="middle">React</text>
+  </g>
+
+  <g transform="translate(210, 100)">
+    <rect width="145" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="37" y="14" width="71" height="52" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+    <g transform="translate(56, 26)">
+      <text x="0" y="24" fill="#000000" font-size="17" font-weight="900" font-family="Arial, sans-serif">NEXT<tspan font-size="10">.js</tspan></text>
+    </g>
+    <text x="72.5" y="88" fill="#334155" font-size="14" font-weight="600" text-anchor="middle">Next.js</text>
+  </g>
+
+  <g transform="translate(375, 100)">
+    <rect width="145" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="37" y="14" width="71" height="52" rx="8" fill="#3178c6"/>
+    <text x="72.5" y="49" fill="#ffffff" font-size="24" font-weight="800" text-anchor="middle" font-family="Arial, sans-serif">TS</text>
+    <text x="72.5" y="88" fill="#334155" font-size="14" font-weight="600" text-anchor="middle">TypeScript</text>
+  </g>
+
+  <g transform="translate(540, 100)">
+    <rect width="145" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="37" y="14" width="71" height="52" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+    <path d="M 54 27 C 62 19, 74 21, 84 27 C 76 35, 64 33, 54 27 Z" fill="#06b6d4"/>
+    <path d="M 58 45 C 66 37, 78 39, 88 45 C 80 53, 68 51, 58 45 Z" fill="#06b6d4"/>
+    <text x="72.5" y="88" fill="#334155" font-size="14" font-weight="600" text-anchor="middle">Tailwind CSS</text>
+  </g>
+
+  <g transform="translate(705, 100)">
+    <rect width="145" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="37" y="14" width="71" height="52" rx="8" fill="#232f3e"/>
+    <text x="72.5" y="38" fill="#ff9900" font-size="13" font-weight="800" text-anchor="middle" font-family="Arial">aws</text>
+    <text x="72.5" y="52" fill="#ffffff" font-size="8" font-weight="700" text-anchor="middle">DynamoDB</text>
+    <text x="72.5" y="88" fill="#334155" font-size="13" font-weight="600" text-anchor="middle">DynamoDB</text>
+  </g>
+
+  <!-- Row 2 -->
+  <g transform="translate(45, 225)">
+    <rect width="145" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="37" y="14" width="71" height="52" rx="8" fill="#f97316"/>
+    <text x="72.5" y="48" fill="#ffffff" font-size="22" font-weight="900" text-anchor="middle" font-family="Arial">D3</text>
+    <text x="72.5" y="88" fill="#334155" font-size="14" font-weight="600" text-anchor="middle">D3.js</text>
+  </g>
+
+  <g transform="translate(210, 225)">
+    <rect width="145" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="37" y="14" width="71" height="52" rx="8" fill="#475569"/>
+    <text x="72.5" y="44" fill="#ffffff" font-size="13" font-weight="800" text-anchor="middle">Zustand</text>
+    <text x="72.5" y="88" fill="#334155" font-size="14" font-weight="600" text-anchor="middle">Zustand</text>
+  </g>
+
+  <g transform="translate(375, 225)">
+    <rect width="145" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="37" y="14" width="71" height="52" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+    <path d="M 52 20 L 72.5 40 L 52 40 Z" fill="#ec4899"/>
+    <path d="M 93 20 L 72.5 40 L 93 40 Z" fill="#8b5cf6"/>
+    <path d="M 52 40 L 72.5 20 L 93 40 L 72.5 54 Z" fill="#3b82f6"/>
+    <text x="72.5" y="88" fill="#334155" font-size="13" font-weight="600" text-anchor="middle">Motion</text>
+  </g>
+
+  <g transform="translate(540, 225)">
+    <rect width="145" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="37" y="14" width="71" height="52" rx="8" fill="#1e293b"/>
+    <text x="72.5" y="44" fill="#38bdf8" font-size="14" font-weight="900" text-anchor="middle">HLS.js</text>
+    <text x="72.5" y="88" fill="#334155" font-size="14" font-weight="600" text-anchor="middle">HLS.js</text>
+  </g>
+
+  <g transform="translate(705, 225)">
+    <rect width="145" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="37" y="14" width="71" height="52" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="72.5" y="45" fill="#f43f5e" font-size="16" font-weight="800" text-anchor="middle">Lucide</text>
+    <text x="72.5" y="88" fill="#334155" font-size="14" font-weight="600" text-anchor="middle">Lucide React</text>
+  </g>
+
+
+  <!-- SEPARATOR LINE -->
+  <line x1="35" y1="365" x2="865" y2="365" stroke="#e2e8f0" stroke-width="1"/>
+
+
+  <!-- ================================================================= -->
+  <!-- CATEGORY 2: DEVOPS AND TOOLS (6) -->
+  <!-- ================================================================= -->
+
+  <!-- Category Header 2 -->
+  <g transform="translate(35, 390)">
+    <rect x="0" y="0" width="44" height="44" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.2"/>
+    <g transform="translate(10, 10)" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="5" r="3"/>
+      <circle cx="6" cy="12" r="3"/>
+      <circle cx="18" cy="19" r="3"/>
+      <line x1="8.5" y1="10.5" x2="15.5" y2="6.5"/>
+      <line x1="8.5" y1="13.5" x2="15.5" y2="17.5"/>
+    </g>
+
+    <!-- Title & Count -->
+    <text x="58" y="28" fill="#0f172a" font-size="19" font-weight="700" letter-spacing="-0.3">DevOps &amp; Tools</text>
+    <text x="215" y="28" fill="#94a3b8" font-size="16" font-weight="500">(6)</text>
+
+    <!-- Collapsible Minus Icon -->
+    <line x1="800" y1="22" x2="816" y2="22" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- GRID 2: 6 TILES (Width 128px, Gap 14px) -->
+
+  <!-- Tile 1: Git -->
+  <g transform="translate(45, 455)">
+    <rect width="128" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="28" y="14" width="71" height="52" rx="8" fill="#ffffff"/>
+    <rect x="47" y="23" width="34" height="34" rx="5" fill="#f05032" transform="rotate(45 64 40)"/>
+    <circle cx="58" cy="40" r="3" fill="#ffffff"/>
+    <circle cx="70" cy="34" r="3" fill="#ffffff"/>
+    <circle cx="70" cy="46" r="3" fill="#ffffff"/>
+    <line x1="58" y1="40" x2="70" y2="46" stroke="#ffffff" stroke-width="2"/>
+    <line x1="70" y1="34" x2="70" y2="46" stroke="#ffffff" stroke-width="2"/>
+    <text x="64" y="88" fill="#334155" font-size="13" font-weight="600" text-anchor="middle">Git</text>
+  </g>
+
+  <!-- Tile 2: GitHub -->
+  <g transform="translate(182, 455)">
+    <rect width="128" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="28" y="14" width="71" height="52" rx="8" fill="#0f172a"/>
+    <path d="M 64 24 C 53 24 44 33 44 44 C 44 52.8 49.7 60.2 57.6 62.8 C 58.6 63 59 62.4 59 61.8 V 58.3 C 53.4 59.5 52.2 55.6 52.2 55.6 C 51.3 53.3 50 52.7 50 52.7 C 48.2 51.5 50.1 51.5 50.1 51.5 C 52.1 51.6 53.2 53.5 53.2 53.5 C 55 56.5 57.8 55.7 58.9 55.2 C 59.1 53.9 59.6 53 60.2 52.5 C 55.7 52 51 50.3 51 42.6 C 51 40.4 51.8 38.6 53.1 37.2 C 52.9 36.7 52.2 34.6 53.3 31.8 C 53.3 31.8 55 31.3 58.9 33.9 C 60.5 33.4 62.3 33.2 64 33.2 C 65.7 33.2 67.5 33.4 69.1 33.9 C 73 31.3 74.7 31.8 74.7 31.8 C 75.8 34.6 75.1 36.7 74.9 37.2 C 76.2 38.6 77 40.4 77 42.6 C 77 50.3 72.3 52 67.8 52.5 C 68.5 53.1 69.1 54.3 69.1 56.1 V 61.8 C 69.1 62.4 69.5 63 70.5 62.8 C 78.3 60.2 84 52.8 84 44 C 84 33 75 24 64 24 Z" fill="#ffffff"/>
+    <text x="64" y="88" fill="#334155" font-size="13" font-weight="600" text-anchor="middle">GitHub</text>
+  </g>
+
+  <!-- Tile 3: Cursor AI -->
+  <g transform="translate(319, 455)">
+    <rect width="128" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="28" y="14" width="71" height="52" rx="8" fill="#000000"/>
+    <text x="64" y="46" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle">CURSOR</text>
+    <text x="64" y="88" fill="#334155" font-size="13" font-weight="600" text-anchor="middle">Cursor AI</text>
+  </g>
+
+  <!-- Tile 4: Tailscale -->
+  <g transform="translate(456, 455)">
+    <rect width="128" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="28" y="14" width="71" height="52" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+    <g transform="translate(47, 25)" fill="#232d3f">
+      <circle cx="5" cy="5" r="3.5"/><circle cx="17" cy="5" r="3.5"/><circle cx="29" cy="5" r="3.5"/>
+      <circle cx="5" cy="15" r="3.5"/><circle cx="17" cy="15" r="3.5"/><circle cx="29" cy="15" r="3.5"/>
+      <circle cx="5" cy="25" r="3.5"/><circle cx="17" cy="25" r="3.5"/><circle cx="29" cy="25" r="3.5"/>
+    </g>
+    <text x="64" y="88" fill="#334155" font-size="13" font-weight="600" text-anchor="middle">Tailscale</text>
+  </g>
+
+  <!-- Tile 5: DroidCam (ADDED NEW TILE) -->
+  <g transform="translate(593, 455)">
+    <rect width="128" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="28" y="14" width="71" height="52" rx="8" fill="#22c55e"/>
+    <!-- Android / Camera Icon -->
+    <g transform="translate(51, 26)" fill="#ffffff">
+      <path d="M 6 8 C 6 4, 20 4, 20 8 L 20 18 L 6 18 Z M 2 10 L 5 10 L 5 16 L 2 16 Z M 21 10 L 24 10 L 24 16 L 21 16 Z"/>
+      <circle cx="10" cy="9" r="1.5" fill="#22c55e"/>
+      <circle cx="16" cy="9" r="1.5" fill="#22c55e"/>
+      <circle cx="13" cy="21" r="3" fill="#ffffff"/>
+    </g>
+    <text x="64" y="88" fill="#334155" font-size="13" font-weight="600" text-anchor="middle">DroidCam</text>
+  </g>
+
+  <!-- Tile 6: ESLint -->
+  <g transform="translate(730, 455)">
+    <rect width="128" height="110" rx="10" fill="#f8fafc" stroke="#f1f5f9" stroke-width="1"/>
+    <rect x="28" y="14" width="71" height="52" rx="8" fill="#4b32c6"/>
+    <path d="M 64 24 L 79.5 33 L 79.5 47 L 64 56 L 48.5 47 L 48.5 33 Z" fill="none" stroke="#ffffff" stroke-width="2"/>
+    <text x="64" y="44" fill="#ffffff" font-size="13" font-weight="800" text-anchor="middle">ESLint</text>
+    <text x="64" y="88" fill="#334155" font-size="13" font-weight="600" text-anchor="middle">ESLint</text>
+  </g>
+
+  <!-- Footer Watermark / Brand -->
+  <g transform="translate(35, 600)">
+    <text x="0" y="20" fill="#94a3b8" font-size="13" font-weight="500">PyroGuard 2D — Real-Time Fire Safety Tech Stack Profile</text>
+    <text x="820" y="20" fill="#cbd5e1" font-size="13" font-weight="600" text-anchor="end">ursamajor0714/pyroguard2d</text>
+  </g>
+</svg>
