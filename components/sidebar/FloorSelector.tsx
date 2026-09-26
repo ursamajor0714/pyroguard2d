@@ -31,10 +31,7 @@ import {
 
 export type LeftMenuTab = 'SENSOR_MGMT' | 'CCTV' | 'FLOOR_STATUS' | 'PARKING' | 'EMERGENCY_DOOR' | 'FIRE_LOG';
 
-interface FloorSelectorProps {
-}
-
-export const FloorSelector: React.FC<FloorSelectorProps> = () => {
+export const FloorSelector: React.FC = () => {
   const { 
     selectedFloor, 
     setFloor, 

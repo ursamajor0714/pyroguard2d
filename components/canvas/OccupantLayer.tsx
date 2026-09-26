@@ -2,7 +2,6 @@
 import React from 'react';
 import { useCanvasStore } from '../../store/useCanvasStore';
 import { useOccupantStore } from '../../store/useOccupantStore';
-import { getFloorMeta } from '../../types/floor';
 
 interface OccupantLayerProps {
   floorId: string;
@@ -10,16 +9,16 @@ interface OccupantLayerProps {
 
 export const OccupantLayer: React.FC<OccupantLayerProps> = ({ floorId }) => {
   const { isOtpApproved } = useCanvasStore();
-  const { rescuedOccupantIds, clearedFloorIds, rescueOccupant } = useOccupantStore();
+  const { occupants, rescuedOccupantIds, clearedFloorIds, rescueOccupant } = useOccupantStore();
 
   // 119 OTP 승인을 받지 않은 상태에서는 자물쇠(🔒) 및 인명 정보 일체 노출 안함 (100% 미표시)
   if (!isOtpApproved) {
     return null;
   }
 
-  const floorMeta = getFloorMeta(floorId as any);
-
-  if (!floorMeta || !floorMeta.occupants || floorMeta.occupants.length === 0) {
+  // 재실자 목록은 승인된 단말에만 서버가 내려준다 (useOccupantStore.occupants)
+  const floorOccupants = occupants.filter(o => o.floorId === floorId);
+  if (floorOccupants.length === 0) {
     return null;
   }
 
@@ -29,7 +28,7 @@ export const OccupantLayer: React.FC<OccupantLayerProps> = ({ floorId }) => {
   }
 
   // 이미 개별 구조 완료(클릭)된 인원 제외
-  const activeOccupants = floorMeta.occupants.filter(
+  const activeOccupants = floorOccupants.filter(
     occ => !rescuedOccupantIds.includes(occ.id)
   );
 

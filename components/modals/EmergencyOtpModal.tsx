@@ -5,6 +5,7 @@ import { useCanvasStore } from '../../store/useCanvasStore';
 import { Button } from '../common/Button';
 import { ShieldIcon, LockIcon, CheckIcon, AlertIcon } from '../common/Icons';
 import { X } from 'lucide-react';
+import { api, ApiError } from '../../lib/client/api';
 
 interface EmergencyOtpModalProps {
   isOpen: boolean;
@@ -78,28 +79,18 @@ export const EmergencyOtpModal: React.FC<EmergencyOtpModalProps> = ({ isOpen, on
     setErrorMsg('');
 
     try {
-      const res = await fetch('/api/emergency', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ otp: otpCode })
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setIsSuccess(true);
-        setTimeout(() => {
-          startOtpTimer();
-          useCanvasStore.getState().setViewMode('BUILDING');
-          onClose();
-        }, 1000);
-      } else {
-        setErrorMsg(data.message || '인증번호가 일치하지 않습니다. 소방 단말기를 다시 확인하십시오.');
-        setOtpValues(Array(6).fill(''));
-        inputRefs.current[0]?.focus();
-      }
-    } catch {
-      setErrorMsg('서버와 통신에 실패했습니다. (로컬 테스트 번호: 119119)');
+      await api('/api/emergency', { method: 'POST', json: { otp: otpCode } });
+      setIsSuccess(true);
+      setTimeout(() => {
+        startOtpTimer();
+        useCanvasStore.getState().setViewMode('BUILDING');
+        onClose();
+      }, 1000);
+    } catch (err) {
+      // 서버가 이유를 알려 준다 (오답 / 연속 오답 잠금 / 평시라 거절)
+      setErrorMsg(err instanceof ApiError ? err.message : '서버와 통신에 실패했습니다.');
+      setOtpValues(Array(6).fill(''));
+      inputRefs.current[0]?.focus();
     } finally {
       setIsValidating(false);
     }
@@ -161,7 +152,7 @@ export const EmergencyOtpModal: React.FC<EmergencyOtpModalProps> = ({ isOpen, on
           {isSuccess && (
             <div className="flex items-center gap-1.5 justify-center text-emerald-400 text-xs font-bold">
               <CheckIcon size={14} />
-              <span>인증 성공. 인명 조망 마스킹이 해제되었습니다. (상황 종료 시까지 유지)</span>
+              <span>인증 성공. 인명 조망 마스킹이 해제되었습니다. (상황 종료 또는 유효시간 만료 시 다시 마스킹)</span>
             </div>
           )}
 
@@ -187,9 +178,6 @@ export const EmergencyOtpModal: React.FC<EmergencyOtpModalProps> = ({ isOpen, on
           </div>
         </form>
 
-        <div className="mt-5 pt-4 border-t border-slate-800 text-[10px] text-slate-500 text-center leading-relaxed font-mono">
-          로컬 테스트 인증 코드: <span className="text-blue-500 font-bold">119119</span>
-        </div>
       </div>
     </div>
   );
