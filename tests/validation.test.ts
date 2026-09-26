@@ -24,6 +24,12 @@ describe('validateNewSensor', () => {
     expect(validateNewSensor({ ...base, ...over }).ok).toBe(false);
   });
 
+  it('전원 꺼진 비상문을 잠긴 상태로 새로 만들 수 없다 (수정과 같은 규칙)', () => {
+    const door = { ...base, type: 'EMERGENCY_DOOR', powerStatus: 'OFF' };
+    expect(validateNewSensor({ ...door, doorState: 'LOCKED' }).ok).toBe(false);
+    expect(validateNewSensor({ ...door, doorState: 'UNLOCKED' }).ok).toBe(true);
+  });
+
   it('스키마 밖 필드는 버린다', () => {
     const r = validateNewSensor({ ...base, evil: 'x' });
     expect(r.ok && 'evil' in r.value).toBe(false);

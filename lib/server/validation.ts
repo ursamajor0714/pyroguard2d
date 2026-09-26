@@ -57,6 +57,10 @@ export function validateNewSensor(body: Record<string, unknown>): Result<SensorN
   if (!isValidSensorId(body.id)) errors.push('id 는 영문·숫자·-·_ 1~80자 문자열이어야 합니다.');
   const fields = pick(body);
   checkWhole(fields, errors);
+  // 비상문 fail-safe — 수정(validatePatch)과 같은 규칙. 전원이 꺼진 문을 잠긴 상태로 새로 만들 수 없다.
+  if (fields.type === 'EMERGENCY_DOOR' && fields.powerStatus === 'OFF' && fields.doorState === 'LOCKED') {
+    errors.push('전원이 꺼진 비상문은 잠글 수 없습니다 (정전 시 fail-safe 개방).');
+  }
   if (errors.length) return { ok: false, errors };
   return { ok: true, value: { ...(fields as Omit<SensorNode, 'id' | 'updatedAt'>), id: body.id as string, updatedAt: '' } };
 }
