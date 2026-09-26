@@ -3,9 +3,9 @@
 2D CAD 도면 위에서 빌딩 소방 설비를 실시간 관제하는 방재 시스템입니다.
 지상 17층 / 지하 3층 / 옥상 / 외부 — 22개 관제 구역, 92개 소방 노드를 한 화면에서 감시하고 119 출동 시 인명 위치를 연동합니다.
 
-🎥 [CCTV 라이브 피드 시연 영상](CCTV%20%EC%8B%9C%EC%97%B0%20%EC%98%81%EC%83%81.mp4)
+🎥 [CCTV 라이브 피드 시연 영상](docs/%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81/CCTV%20%EC%8B%9C%EC%97%B0%20%EC%98%81%EC%83%81.mp4)
 
-![기술 스택](pyroguard2d_tech_stack.png)
+![기술 스택](docs/%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8/pyroguard2d_tech_stack.png)
 
 ## 스택
 
@@ -45,8 +45,8 @@ store/          Zustand 5개 — canvas · sensor · occupant · evCharger · fi
 tests/          Vitest
 ```
 
-![DB 구조](db_architecture.png)
-![ERD](erd_diagram.png)
+![DB 구조](docs/%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8/db_architecture.png)
+![ERD](docs/%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8/erd_diagram.png)
 
 ## 실행
 
@@ -88,4 +88,4 @@ GitHub Actions(`.github/workflows/ci.yml`)가 push·PR 마다 위 네 가지와 
 
 ## 문서
 
-[기획서](%EA%B8%B0%ED%9A%8D%EC%84%9C.txt) · [아키텍처 구조](%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%20%EA%B5%AC%EC%A1%B0.txt) · [API 기능 정의서](API_%EA%B8%B0%EB%8A%A5_%EC%A0%95%EC%9D%98%EC%84%9C.txt) · [전체 기능 리뷰](%EC%A0%84%EC%B2%B4%20%EA%B5%AC%EC%A1%B0%20%EB%B0%8F%20%EA%B8%B0%EB%8A%A5%20%EB%A6%AC%EB%B7%B0%20-%20%ED%95%9C%EA%B8%80%EC%9A%94%EC%95%BD%EB%B3%B8.txt) · [수정사항 기록](%EC%88%98%EC%A0%95%EC%82%AC%ED%95%AD%EA%B8%B0%EB%A1%9D.txt)
+[기획서](docs/%EA%B8%B0%ED%9A%8D/%EA%B8%B0%ED%9A%8D%EC%84%9C.txt) · [아키텍처 구조](docs/%EA%B8%B0%ED%9A%8D/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%20%EA%B5%AC%EC%A1%B0.txt) · [API 기능 정의서](docs/%EA%B8%B0%ED%9A%8D/API_%EA%B8%B0%EB%8A%A5_%EC%A0%95%EC%9D%98%EC%84%9C.txt) · [전체 기능 리뷰](docs/%EB%A6%AC%EB%B7%B0/%EC%A0%84%EC%B2%B4%20%EA%B5%AC%EC%A1%B0%20%EB%B0%8F%20%EA%B8%B0%EB%8A%A5%20%EB%A6%AC%EB%B7%B0%20-%20%ED%95%9C%EA%B8%80%EC%9A%94%EC%95%BD%EB%B3%B8.txt) · [수정사항 기록](docs/%EC%88%98%EC%A0%95%EC%82%AC%ED%95%AD%EA%B8%B0%EB%A1%9D.txt)
