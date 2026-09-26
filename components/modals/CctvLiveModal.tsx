@@ -5,6 +5,16 @@ import { useSensorStore } from '../../store/useSensorStore';
 import { Button } from '../common/Button';
 import { Badge } from '../common/Badge';
 import { Video, AlertTriangle, X, Settings, Camera, CheckCircle2, Wrench, RotateCw, Maximize2, Minimize2, Flame, ShieldAlert } from 'lucide-react';
+import { kstDateTime } from '../../lib/time';
+
+// CCTV 스트리밍 주소는 https 만 받는다 (javascript:·http: 등 차단)
+const isSafeStreamUrl = (url: string) => {
+  try {
+    return new URL(url).protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
 
 interface CctvLiveModalProps {
   onOpenOtpModal: () => void;
@@ -44,7 +54,7 @@ export const CctvLiveModal: React.FC<CctvLiveModalProps> = ({ onOpenOtpModal }) 
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
-      setLiveTimestamp(now.toISOString().replace('T', ' ').substring(0, 19));
+      setLiveTimestamp(`${kstDateTime(now)} KST`);
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -92,6 +102,10 @@ export const CctvLiveModal: React.FC<CctvLiveModalProps> = ({ onOpenOtpModal }) 
 
   const saveStreamingUrl = () => {
     const cleanUrl = tempUrl.trim();
+    if (cleanUrl && !isSafeStreamUrl(cleanUrl)) {
+      alert('스트리밍 주소는 https:// 로 시작해야 합니다.');
+      return;
+    }
     localStorage.setItem('cctv_streaming_url', cleanUrl);
     setStreamingUrl(cleanUrl);
     setShowSettings(false);
@@ -226,16 +240,19 @@ export const CctvLiveModal: React.FC<CctvLiveModalProps> = ({ onOpenOtpModal }) 
           }`}
           title="더블클릭 시 전체 화면 / 창 모드 토글"
         >
-          {streamingUrl ? (
+          {streamingUrl && isSafeStreamUrl(streamingUrl) ? (
             <div 
               className="w-full h-full flex items-center justify-center overflow-hidden"
               style={getTransformStyle()}
             >
+              {/* 외부 스트리밍 페이지 — https 만, sandbox 로 이 관제 화면을 조작하거나 이동시키지 못하게 가둔다 */}
               <iframe
                 src={streamingUrl}
                 title="CCTV Live Stream"
                 className="w-full h-full border-0 object-cover"
-                allow="camera; microphone; autoplay"
+                sandbox="allow-scripts allow-same-origin allow-presentation"
+                referrerPolicy="no-referrer"
+                allow="autoplay; fullscreen"
               />
             </div>
           ) : (

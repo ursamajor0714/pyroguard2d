@@ -1,7 +1,7 @@
 // hooks/useD3Zoom.ts
 import { useEffect, useRef } from 'react';
 import { select } from 'd3-selection';
-import { zoom, zoomIdentity } from 'd3-zoom';
+import { zoom, zoomIdentity, zoomTransform } from 'd3-zoom';
 import { useCanvasStore } from '../store/useCanvasStore';
 
 export const useD3Zoom = () => {
@@ -49,13 +49,12 @@ export const useD3Zoom = () => {
     const svgEl = svgRef.current;
     const svgSelection = select(svgEl);
     
-    const d3ZoomObj = (svgEl as any).__zoom;
-    const currentK = d3ZoomObj ? d3ZoomObj.k : 1.0;
+    const currentK = zoomTransform(svgEl).k;   // d3 가 요소에 기억해 둔 현재 배율 (없으면 1)
 
     if (Math.abs(currentK - zoomScale) > 0.001) {
       const nextTransform = zoomIdentity.scale(zoomScale);
       const tempZoom = zoom<SVGSVGElement, unknown>().scaleExtent([0.5, 5.0]);
-      svgSelection.call(tempZoom.transform as any, nextTransform);
+      svgSelection.call(tempZoom.transform, nextTransform);
     }
   }, [zoomScale]);
 

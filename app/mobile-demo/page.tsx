@@ -1,7 +1,7 @@
 // app/mobile-demo/page.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Flame, 
   Droplet, 
@@ -17,67 +17,59 @@ import {
   Car
 } from 'lucide-react';
 import { FLOOR_LIST } from '../../types/floor';
+import { SensorNode } from '../../types/sensor';
+import { api, ApiError, SENSOR_POLL_MS } from '../../lib/client/api';
 
 export default function MobileDemoPage() {
-  const [sensorsList, setSensorsList] = useState<any[]>([]);
+  const [sensorsList, setSensorsList] = useState<SensorNode[]>([]);
   const [cctvUrl, setCctvUrl] = useState<string>('');
   const [connectionStatus, setConnectionStatus] = useState<string>('연결 대기');
   const [selectedFilterFloor, setSelectedFilterFloor] = useState<string>('ALL');
 
   // 대시보드 배치 센서 데이터 동기화
-  const fetchSensors = async () => {
+  const fetchSensors = useCallback(async () => {
     try {
-      const res = await fetch('/api/sensors');
-      const json = await res.json();
-      if (json.success) {
-        setSensorsList(json.data);
-        setConnectionStatus('서버 연동 완료');
-      }
-    } catch (err) {
+      const json = await api<{ data: SensorNode[] }>('/api/sensors');
+      setSensorsList(json.data);
+      setConnectionStatus('서버 연동 완료');
+    } catch {
       setConnectionStatus('서버 연결 실패');
     }
-  };
-
-  useEffect(() => {
-    fetchSensors();
-    const interval = setInterval(fetchSensors, 5000);
-    
-    const savedUrl = localStorage.getItem('cctv_streaming_url') || '';
-    setCctvUrl(savedUrl);
-
-    return () => clearInterval(interval);
   }, []);
+
+  // 관제 PC 와 같은 주기(SENSOR_POLL_MS)로 받아 온다 — 단말마다 경보가 다른 시점에 보이지 않게
+  useEffect(() => {
+    const first = setTimeout(() => {
+      setCctvUrl(localStorage.getItem('cctv_streaming_url') || '');
+      void fetchSensors();
+    }, 0);
+    const interval = setInterval(fetchSensors, SENSOR_POLL_MS);
+    return () => { clearTimeout(first); clearInterval(interval); };
+  }, [fetchSensors]);
 
   // 터치식 실시간 센서 경보(ALARM / NORMAL) 상태 신호 패킷 송신
   const handleTriggerAlarm = async (sensorId: string, sensorType: string) => {
+    const sensor = sensorsList.find(s => s.id === sensorId);
+    if (!sensor) return;
+
+    const nextStatus = sensor.status === 'ALARM' ? 'NORMAL' : 'ALARM';
+    const nextVal = sensorType === 'WATER_PRESSURE'
+      ? (nextStatus === 'ALARM' ? 1.2 : 3.2)
+      : sensor.value;
+
     try {
-      const sensor = sensorsList.find(s => s.id === sensorId);
-      if (!sensor) return;
-
-      const isCurrentAlarm = sensor.status === 'ALARM';
-      const nextStatus = isCurrentAlarm ? 'NORMAL' : 'ALARM';
-      
-      const nextVal = sensorType === 'WATER_PRESSURE' 
-        ? (nextStatus === 'ALARM' ? 1.2 : 3.2) 
-        : sensor.value;
-
-      const res = await fetch('/api/sensors', {
+      await api('/api/sensors', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        json: {
           id: sensorId,
           status: nextStatus,
           value: nextVal,
           ...(sensorType === 'EMERGENCY_DOOR' ? { doorState: nextStatus === 'ALARM' ? 'OPENED' : 'CLOSED' } : {})
-        })
+        }
       });
-
-      const data = await res.json();
-      if (res.ok && data.success) {
-        fetchSensors();
-      }
+      fetchSensors();
     } catch (err) {
-      alert("센서 패킷 전송 실패");
+      alert(`센서 패킷 전송 실패: ${err instanceof ApiError ? err.message : '서버 연결 실패'}`);
     }
   };
 
@@ -86,43 +78,20 @@ export default function MobileDemoPage() {
     try {
       const smokeSensorId = `sensor-smoke-${floorId.toLowerCase()}`;
       const existing = sensorsList.find(s => s.id === smokeSensorId || (s.floorId === floorId && s.type === 'ARC'));
-
       const targetId = existing ? existing.id : smokeSensorId;
 
       if (!existing) {
-        await fetch('/api/sensors', {
+        await api('/api/sensors', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: smokeSensorId,
-            name: sensorName,
-            type: 'ARC',
-            floorId: floorId,
-            x: 50,
-            y: 45,
-            status: 'NORMAL',
-            updatedAt: new Date().toISOString()
-          })
+          json: { id: smokeSensorId, name: sensorName, type: 'ARC', floorId, x: 50, y: 45, status: 'NORMAL' }
         });
       }
 
-      const res = await fetch('/api/sensors', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: targetId,
-          status: 'ALARM',
-          value: 99
-        })
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        alert(`${sensorName} 경보 신호 송출 완료! 웹 대시보드 캔버스에 즉시 반영됩니다.`);
-        fetchSensors();
-      }
+      await api('/api/sensors', { method: 'PUT', json: { id: targetId, status: 'ALARM', value: 99 } });
+      alert(`${sensorName} 경보 신호 송출 완료! 웹 대시보드 캔버스에 즉시 반영됩니다.`);
+      fetchSensors();
     } catch (err) {
-      alert("연기 감지 패킷 전송 에러");
+      alert(`연기 감지 패킷 전송 에러: ${err instanceof ApiError ? err.message : '서버 연결 실패'}`);
     }
   };
 

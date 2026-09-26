@@ -19,6 +19,7 @@ import {
   User,
   Filter
 } from 'lucide-react';
+import { kstDate } from '../../lib/time';
 
 export const FireLogManageModal: React.FC = () => {
   const { isFireLogModalOpen, setFireLogModalOpen } = useCanvasStore();
@@ -32,7 +33,7 @@ export const FireLogManageModal: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   
-  const [formDate, setFormDate] = useState(new Date().toISOString().substring(0, 10));
+  const [formDate, setFormDate] = useState(() => kstDate());
   const [formFloor, setFormFloor] = useState('1F');
   const [formCategory, setFormCategory] = useState('경보설비/CCTV');
   const [formContent, setFormContent] = useState('');
@@ -57,7 +58,7 @@ export const FireLogManageModal: React.FC = () => {
   const resetForm = () => {
     setIsEditing(false);
     setEditingId(null);
-    setFormDate(new Date().toISOString().substring(0, 10));
+    setFormDate(kstDate());
     setFormFloor('1F');
     setFormCategory('경보설비/CCTV');
     setFormContent('');

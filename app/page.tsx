@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { FloorSelector } from '../components/sidebar/FloorSelector';
 import { FloorCanvas } from '../components/canvas/FloorCanvas';
 import { SensorPalette } from '../components/sidebar/SensorPalette';
@@ -16,7 +17,9 @@ import { AlarmCenterToast } from '../components/common/AlarmCenterToast';
 import { useCanvasStore } from '../store/useCanvasStore';
 import { useSensorStore } from '../store/useSensorStore';
 import { useOccupantStore } from '../store/useOccupantStore';
-import { useEmergencyTimer } from '../hooks/useEmergencyTimer';
+import { useEmergencyTimer, refreshEmergencyState } from '../hooks/useEmergencyTimer';
+import { api, SENSOR_POLL_MS } from '../lib/client/api';
+import { SensorNode } from '../types/sensor';
 import { FLOOR_LIST, FloorId } from '../types/floor';
 import { ShieldIcon, AlertIcon } from '../components/common/Icons';
 import { 
@@ -29,10 +32,12 @@ import {
   Siren,
   PowerOff,
   CheckCircle2,
-  Zap
+  Zap,
+  LogOut
 } from 'lucide-react';
 
 export default function DashboardPage() {
+  const router = useRouter();
   const { 
     viewMode,
     setViewMode,
@@ -43,7 +48,9 @@ export default function DashboardPage() {
   const { 
     nodes, 
     loadNodes, 
-    activeAlarmCount 
+    activeAlarmCount,
+    syncError,
+    clearSyncError
   } = useSensorStore();
 
   const {
@@ -66,23 +73,27 @@ export default function DashboardPage() {
   const oscillatorRef = useRef<OscillatorNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
 
-  const fetchSensors = async () => {
-    try {
-      const res = await fetch('/api/sensors');
-      const json = await res.json();
-      if (json.success && json.data) {
-        loadNodes(json.data);
-      }
-    } catch {
-      // 센서 동기화 실패 시 무시 (다음 폴링에서 재시도)
-    }
-  };
-
+  // 센서 목록과 119 승인 상태를 같은 주기로 서버에서 받아 온다 (모바일 데모와 같은 SENSOR_POLL_MS)
   useEffect(() => {
+    const fetchSensors = async () => {
+      try {
+        const json = await api<{ data?: SensorNode[] }>('/api/sensors');
+        if (json.data) loadNodes(json.data);
+      } catch {
+        // 센서 동기화 실패 시 다음 폴링에서 재시도 (401 이면 로그인 화면으로 이동)
+      }
+      await refreshEmergencyState();
+    };
     fetchSensors();
-    const interval = setInterval(fetchSensors, 3000);
+    const interval = setInterval(fetchSensors, SENSOR_POLL_MS);
     return () => clearInterval(interval);
-  }, []);
+  }, [loadNodes]);
+
+  const handleLogout = async () => {
+    // 로그아웃 요청이 실패해도 로그인 화면으로 보낸다 (쿠키는 세션 만료로 끊긴다)
+    await api('/api/auth/logout', { method: 'POST' }).catch((err) => console.warn('로그아웃 요청 실패:', err));
+    router.replace('/login');
+  };
 
   const stopAlarmSound = () => {
     if (oscillatorRef.current) {
@@ -108,7 +119,7 @@ export default function DashboardPage() {
       }
 
       if (!audioContextRef.current) {
-        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+        audioContextRef.current = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       }
 
       const ctx = audioContextRef.current;
@@ -160,6 +171,13 @@ export default function DashboardPage() {
 
   return (
     <div className="w-full h-full flex bg-[#060913] overflow-hidden select-none">
+      {/* 서버 저장 실패 알림 — 화면에서 되돌린 변경이 있으면 사유를 보여 준다 */}
+      {syncError && (
+        <div role="alert" className="fixed top-3 left-1/2 -translate-x-1/2 z-[100] px-4 py-2 rounded-xl bg-red-950/95 border border-red-500 text-red-200 text-xs font-bold shadow-2xl flex items-center gap-3">
+          <span>{syncError}</span>
+          <button onClick={clearSyncError} className="text-red-300 hover:text-white cursor-pointer" title="닫기">✕</button>
+        </div>
+      )}
       <AnimatePresence mode="wait">
         {/* 모드 1: 2.5D 건물 수직 방재 조감도 */}
         {viewMode === 'BUILDING' ? (
@@ -185,7 +203,7 @@ export default function DashboardPage() {
                     </span>
                   </div>
                   <p className="text-xs text-slate-400 mt-0.5">
-                    지상 17층 / 지하 3층 / 외부 (총 21개 관제 구역) 수직 방재 조감도 — 층 클릭 시 2D 평면 도면으로 진입합니다.
+                    지상 17층 / 옥상 / 지하 3층 / 외부 (총 22개 관제 구역) 수직 방재 조감도 — 층 클릭 시 2D 평면 도면으로 진입합니다.
                   </p>
                 </div>
               </div>
@@ -203,6 +221,14 @@ export default function DashboardPage() {
                     title={isMuted ? "경보 부저 음소거 해제" : "경보 부저 음소거"}
                   >
                     {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                  </button>
+
+                  <button
+                    onClick={handleLogout}
+                    className="p-2 rounded-xl border bg-slate-900/90 hover:bg-slate-800 text-slate-300 border-slate-800 transition duration-200 shadow-xl cursor-pointer"
+                    title="로그아웃"
+                  >
+                    <LogOut size={16} />
                   </button>
 
                   <div className={`glass-panel px-3 py-1.5 rounded-xl border flex items-center gap-2 text-xs font-bold ${
@@ -252,7 +278,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* 21개 관제 구역/층 카드 그리드 */}
+            {/* 22개 관제 구역/층 카드 그리드 */}
             <div className="flex-1 min-h-0 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-700">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 pb-6">
                 {FLOOR_LIST.map((floor) => {

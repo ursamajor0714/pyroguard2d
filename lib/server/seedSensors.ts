@@ -1,9 +1,9 @@
-// lib/aws/dynamodb.ts
+// lib/server/seedSensors.ts
 import { SensorNode } from '../../types/sensor';
 import { FLOOR_LIST } from '../../types/floor';
 
-// 빌딩 21개 관제 구역 기본 센서 세팅 (최초 진입 시 전원 NORMAL 정상 상태)
-const generateOfficeBuildingSensors = (): SensorNode[] => {
+// 빌딩 22개 관제 구역 기본 센서 (최초 실행 시 전원 NORMAL). 저장 파일이 없을 때만 쓴다.
+export const generateOfficeBuildingSensors = (): SensorNode[] => {
   const list: SensorNode[] = [];
   const now = new Date().toISOString();
 
@@ -123,40 +123,3 @@ const generateOfficeBuildingSensors = (): SensorNode[] => {
 
   return list;
 };
-
-let localMemoryDb: SensorNode[] = generateOfficeBuildingSensors();
-
-export async function getSensorsFromDb(floorId?: string): Promise<SensorNode[]> {
-  if (floorId) {
-    return localMemoryDb.filter(node => node.floorId === floorId);
-  }
-  return localMemoryDb;
-}
-
-export async function saveSensorToDb(sensor: SensorNode): Promise<boolean> {
-  const index = localMemoryDb.findIndex(n => n.id === sensor.id);
-  if (index >= 0) {
-    localMemoryDb[index] = { ...sensor, updatedAt: new Date().toISOString() };
-  } else {
-    localMemoryDb.push(sensor);
-  }
-  return true;
-}
-
-export async function deleteSensorFromDb(id: string): Promise<boolean> {
-  localMemoryDb = localMemoryDb.filter(n => n.id !== id);
-  return true;
-}
-
-export async function updateSensorInDb(id: string, fields: Partial<Omit<SensorNode, 'id'>>): Promise<boolean> {
-  const index = localMemoryDb.findIndex(n => n.id === id);
-  if (index >= 0) {
-    localMemoryDb[index] = {
-      ...localMemoryDb[index],
-      ...fields,
-      updatedAt: new Date().toISOString()
-    };
-    return true;
-  }
-  return false;
-}
