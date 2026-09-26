@@ -26,7 +26,7 @@
     "@tailwindcss/postcss": "^4",
     "@types/d3-selection": "^3.0.12",
     "@types/d3-zoom": "^3.0.8",
-    "@types/node": "^22.20.4",
+    "@types/node": "^26.6.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
