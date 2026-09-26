@@ -16,6 +16,11 @@ export const env = {
   sessionTtlMs: () => Math.max(1, Number(process.env.SESSION_TTL_HOURS) || 12) * 3_600_000,
   /** 다른 출처에서 API 를 부를 수 있게 허용할 주소 목록 (쉼표 구분). 비우면 같은 출처만 */
   corsAllowedOrigins: () => (process.env.CORS_ALLOWED_ORIGINS || '').split(',').map((s) => s.trim()).filter(Boolean),
+  /**
+   * 앞에 둔 믿을 수 있는 프록시(nginx·로드밸런서) 수. 0 이면 X-Forwarded-For 를 믿지 않는다 —
+   * 헤더는 누구나 적어 보낼 수 있어서, 믿으면 로그인 잠금을 헤더만 바꿔 가며 풀 수 있다.
+   */
+  trustProxyHops: () => Math.max(0, Math.floor(Number(process.env.TRUST_PROXY_HOPS) || 0)),
   /** 센서 배치·감사 로그를 저장할 폴더 */
   dataDir: () => process.env.DATA_DIR || path.join(process.cwd(), '.data'),
 };

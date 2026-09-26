@@ -22,5 +22,14 @@ export function audit(action: AuditAction, detail: { sid?: string; ip?: string; 
   }
 }
 
-/** 요청한 쪽 주소 (프록시 뒤라면 x-forwarded-for 첫 번째) */
-export const clientIp = (headers: Headers) => headers.get('x-forwarded-for')?.split(',')[0].trim() || 'local';
+/**
+ * 요청한 쪽 주소 — 로그인 잠금의 열쇠이자 감사 로그에 남는 값.
+ * X-Forwarded-For 의 맨 앞 칸은 요청한 사람이 마음대로 적을 수 있다. 그래서 TRUST_PROXY_HOPS 개의
+ * 믿을 수 있는 프록시가 뒤에서부터 붙인 칸만 쓴다. 프록시가 없으면(0) 헤더를 무시하고 'direct' 하나로 본다.
+ */
+export function clientIp(headers: Headers): string {
+  const hops = env.trustProxyHops();
+  if (hops === 0) return 'direct';
+  const chain = (headers.get('x-forwarded-for') || '').split(',').map((s) => s.trim()).filter(Boolean);
+  return chain[chain.length - hops] || chain[0] || 'direct';
+}

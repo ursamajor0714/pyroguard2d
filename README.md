@@ -78,12 +78,14 @@ npm run build
 ```
 
 GitHub Actions(`.github/workflows/ci.yml`)가 push·PR 마다 위 네 가지와 `npm audit`(운영 의존성)을 돌리고, Dependabot 이 의존성 업데이트를 매주 올립니다.
-외부 품질 측정은 QA 레포의 `nextjs` 도구로 합니다 — 결과와 수정 기록은 [`docs/`](docs/)에 있습니다.
+외부 품질 측정은 QA 레포(`node run.js pyroguard2d`, 설정은 `projects/pyroguard2d`)로 합니다 — 결과와 수정 기록은 [`docs/`](docs/)에 있습니다.
 
 ## 운영
 
 - **상태 확인** — `GET /api/health` (로그인 불필요, 데이터 없음). 설정 누락이면 503. 업타임 감시에 등록합니다.
 - **백업** — `npm run backup` → `backups/pyroguard-data-<KST 시각>.tar.gz` (최근 30개 유지). 복구는 서버를 멈추고 `DATA_DIR` 에 풀어 넣습니다.
+- **프록시 뒤 배포** — nginx·로드밸런서 뒤에 두면 `TRUST_PROXY_HOPS` 를 그 수로 맞춥니다. 0(기본)이면 X-Forwarded-For 를 믿지 않아 로그인 잠금이 서버 전체에 한 개로 걸립니다 — 헤더 위조로 잠금을 푸는 것은 막지만, 누가 5번 틀리면 5분 동안 새 로그인이 모두 막힙니다(이미 로그인한 단말은 그대로 씁니다). 운영에서는 프록시 뒤에 두고 이 값을 맞추는 것을 권합니다.
+- **로그아웃** — 토큰을 서버에서도 무효로 합니다 (`DATA_DIR/revoked-sessions.json`, 만료가 지나면 스스로 지움).
 - **배포 형태** — 저장소가 파일 하나라 **서버 1대(인스턴스 1개)** 로 운영합니다. 여러 인스턴스·서버리스로 나누려면 저장소를 DB 로 바꿔야 합니다. 119 승인은 서버 메모리에 있어 재시작하면 모두 풀립니다(안전한 쪽).
 
 ## 문서

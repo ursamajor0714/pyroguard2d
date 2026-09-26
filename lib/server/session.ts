@@ -1,10 +1,12 @@
 // lib/server/session.ts
 // 운영자 세션 — 서명한 토큰을 HttpOnly 쿠키로 준다. 외부 장치·스크립트는 같은 토큰을 Bearer 로 보내도 된다.
 // 토큰 = base64url({ sid, exp }) + '.' + HMAC-SHA256 서명. 서버에 세션 목록을 두지 않아 재시작해도 로그인이 유지된다.
+// 로그아웃한 세션은 revoked.ts 가 만료 때까지 기억해 거절한다.
 import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { env } from './env';
+import { isRevoked } from './revoked';
 
 export const SESSION_COOKIE = 'pg_session';
 
@@ -34,6 +36,7 @@ export function verifySession(token: string | undefined | null): Session | null 
   try {
     const s = JSON.parse(Buffer.from(payload, 'base64url').toString()) as Session;
     if (typeof s.sid !== 'string' || typeof s.exp !== 'number' || s.exp < Date.now()) return null;
+    if (isRevoked(s.sid)) return null;   // 로그아웃한 토큰
     return s;
   } catch {
     return null;
